@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f7fbfb;
+  --foreground: #102026;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at top left, rgba(125, 211, 252, 0.25), transparent 32rem),
+    radial-gradient(circle at top right, rgba(134, 239, 172, 0.22), transparent 30rem),
+    var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.sheet-scrollbar::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+}
+
+.sheet-scrollbar::-webkit-scrollbar-thumb {
+  background: #bfdbfe;
+  border-radius: 999px;
+}

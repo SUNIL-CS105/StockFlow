@@ -1,0 +1,49 @@
+{
+  "name": "stockflow",
+  "version": "1.0.0",
+  "description": "Full-stack stock photo batch metadata and export workflow.",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SUNIL-CS105/StockFlow.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SUNIL-CS105/StockFlow/issues"
+  },
+  "homepage": "https://github.com/SUNIL-CS105/StockFlow#readme",
+  "dependencies": {
+    "@supabase/ssr": "^0.10.3",
+    "@supabase/supabase-js": "^2.105.4",
+    "jszip": "^3.10.1",
+    "lucide-react": "^1.14.0",
+    "next": "^16.2.6",
+    "openai": "^6.37.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "sharp": "^0.34.5",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.0",
+    "@types/node": "^25.7.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "eslint": "^9.39.4",
+    "eslint-config-next": "^16.2.6",
+    "tailwindcss": "^4.3.0",
+    "typescript": "^6.0.3"
+  },
+  "overrides": {
+    "postcss": "^8.5.14"
+  }
+}
