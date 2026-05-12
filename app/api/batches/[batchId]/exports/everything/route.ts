@@ -43,7 +43,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ bat
       zip.file(`${folder}/${image.original_filename.replace(/\.[^.]+$/, "")}.jpg`, await response.arrayBuffer());
     }
 
-    const archive = await zip.generateAsync({ type: "uint8array" });
+    const archive = await zip.generateAsync({ type: "arraybuffer" });
     return new NextResponse(archive, {
       headers: {
         "Content-Type": "application/zip",

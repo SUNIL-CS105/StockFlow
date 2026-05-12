@@ -13,6 +13,16 @@ type Row = StockImage & {
   metadata: ImageMetadata | null;
 };
 
+type MetadataDraft = {
+  title: string;
+  description: string;
+  keywords: string;
+  category: string;
+  license_type_suggestion: LicenseSuggestion;
+  release_warning: string;
+  quality_warning: string;
+};
+
 export function MetadataTable({ rows }: { rows: Row[] }) {
   const router = useRouter();
   const [drafts, setDrafts] = useState(
@@ -40,10 +50,14 @@ export function MetadataTable({ rows }: { rows: Row[] }) {
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  function updateDraft(metadataId: string, field: string, value: string) {
+  function updateDraft<K extends keyof MetadataDraft>(metadataId: string, field: K, value: MetadataDraft[K]) {
     setDrafts((current) => {
       const next = new Map(current);
-      next.set(metadataId, { ...next.get(metadataId), [field]: value });
+      const draft = next.get(metadataId);
+      if (!draft) {
+        return next;
+      }
+      next.set(metadataId, { ...draft, [field]: value });
       return next;
     });
   }

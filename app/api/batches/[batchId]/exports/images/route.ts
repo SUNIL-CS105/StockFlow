@@ -32,7 +32,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ bat
       zip.file(`${suffix}/${image.original_filename.replace(/\.[^.]+$/, "")}-${suffix}.jpg`, await response.arrayBuffer());
     }
 
-    const archive = await zip.generateAsync({ type: "uint8array" });
+    const archive = await zip.generateAsync({ type: "arraybuffer" });
     return new NextResponse(archive, {
       headers: {
         "Content-Type": "application/zip",
