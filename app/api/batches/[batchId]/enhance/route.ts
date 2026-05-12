@@ -56,10 +56,8 @@ export async function POST(_request: Request, { params }: { params: Promise<{ ba
                 .from(STORAGE_BUCKETS.originals)
                 .download(image.stored_url)
             ).data;
-        const downloadError = originalBlob ? null : new Error("Unable to download original image.");
-
-        if (downloadError) {
-          throw downloadError;
+        if (!originalBlob) {
+          throw new Error("Unable to download original image.");
         }
 
         const enhancedBuffer = await lightlyEnhanceImage(await originalBlob.arrayBuffer());
