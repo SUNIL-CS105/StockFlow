@@ -25,6 +25,8 @@ The MVP intentionally does **not** auto-upload to stock platforms. It produces c
 7. User reviews and edits metadata in a spreadsheet-style table.
 8. User exports master CSV, Getty CSV, Adobe Stock CSV, Shutterstock CSV, Alamy CSV, Dreamstime CSV, enhanced images ZIP, and metadata JSON backup.
 
+Students can also click **Try with sample photos** on the dashboard. This creates a saved practice batch with three sample images and complete metadata, so they can test review/edit/export without uploading anything.
+
 ## Pages
 
 - `/` landing page

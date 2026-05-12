@@ -17,9 +17,9 @@ export function ExportPanel({ batchId }: { batchId: string }) {
     <div className="grid gap-4 lg:grid-cols-2">
       <Card>
         <FileSpreadsheet className="text-blue-600" />
-        <h2 className="mt-4 text-xl font-bold text-slate-950">CSV exports</h2>
+        <h2 className="mt-4 text-xl font-bold text-slate-950">Spreadsheet downloads</h2>
         <p className="mt-2 text-sm leading-6 text-slate-600">
-          Download spreadsheet-ready files for each marketplace. Review warnings before uploading anywhere.
+          Choose the stock website you want. StockFlow makes the spreadsheet file for you.
         </p>
         <div className="mt-5 grid gap-2 sm:grid-cols-2">
           {platforms.map((platform) => (
@@ -33,18 +33,18 @@ export function ExportPanel({ batchId }: { batchId: string }) {
 
       <Card>
         <Archive className="text-emerald-600" />
-        <h2 className="mt-4 text-xl font-bold text-slate-950">Download files</h2>
+        <h2 className="mt-4 text-xl font-bold text-slate-950">Photo and backup downloads</h2>
         <p className="mt-2 text-sm leading-6 text-slate-600">
-          Export enhanced images as a ZIP and keep a JSON backup of every metadata field.
+          Save improved photos as a ZIP and keep a backup of your words.
         </p>
         <div className="mt-5 grid gap-2">
           <Button type="button" variant="secondary" onClick={() => download(`/api/batches/${batchId}/exports/images`)}>
             <Archive size={16} />
-            Download Enhanced Images
+            Download improved photos
           </Button>
           <Button type="button" variant="ghost" onClick={() => download(`/api/batches/${batchId}/exports?platform=master&format=json`)}>
             <FileJson size={16} />
-            Metadata JSON backup
+            Words backup
           </Button>
           <Button type="button" onClick={() => download(`/api/batches/${batchId}/exports/everything`)}>
             <Download size={16} />

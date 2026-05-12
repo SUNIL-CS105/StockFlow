@@ -44,16 +44,16 @@ export async function POST(_request: Request, { params }: { params: Promise<{ ba
       try {
         const bucket = image.enhanced_url ? STORAGE_BUCKETS.enhanced : STORAGE_BUCKETS.originals;
         const path = image.enhanced_url ?? image.stored_url;
-        const { data: signedUrlData, error: signedUrlError } = await session.supabase.storage
-          .from(bucket)
-          .createSignedUrl(path, 60 * 10);
+        const signedUrlResult = path.startsWith("http")
+          ? { data: { signedUrl: path }, error: null }
+          : await session.supabase.storage.from(bucket).createSignedUrl(path, 60 * 10);
 
-        if (signedUrlError || !signedUrlData?.signedUrl) {
-          throw signedUrlError ?? new Error("Unable to create signed image URL.");
+        if (signedUrlResult.error || !signedUrlResult.data?.signedUrl) {
+          throw signedUrlResult.error ?? new Error("Unable to create signed image URL.");
         }
 
         const generated = await generateImageMetadata({
-          imageUrl: signedUrlData.signedUrl,
+          imageUrl: signedUrlResult.data.signedUrl,
           filename: image.original_filename,
           keywordLimit: settings.default_keyword_count,
           strictQualityWarnings: settings.strict_quality_warnings,

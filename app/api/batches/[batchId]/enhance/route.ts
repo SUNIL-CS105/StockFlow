@@ -49,12 +49,17 @@ export async function POST(_request: Request, { params }: { params: Promise<{ ba
       try {
         await session.supabase.from("images").update({ status: "enhancing" }).eq("id", image.id);
 
-        const { data: originalBlob, error: downloadError } = await admin.storage
-          .from(STORAGE_BUCKETS.originals)
-          .download(image.stored_url);
+        const originalBlob = image.stored_url.startsWith("http")
+          ? await fetch(image.stored_url).then((response) => (response.ok ? response.blob() : null))
+          : (
+              await admin.storage
+                .from(STORAGE_BUCKETS.originals)
+                .download(image.stored_url)
+            ).data;
+        const downloadError = originalBlob ? null : new Error("Unable to download original image.");
 
-        if (downloadError || !originalBlob) {
-          throw downloadError ?? new Error("Unable to download original image.");
+        if (downloadError) {
+          throw downloadError;
         }
 
         const enhancedBuffer = await lightlyEnhanceImage(await originalBlob.arrayBuffer());

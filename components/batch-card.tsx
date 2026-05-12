@@ -25,10 +25,10 @@ export function BatchCard({ batch, imageCount }: { batch: Batch; imageCount: num
       </div>
       <div className="flex flex-wrap gap-2">
         <ButtonLink href={`/dashboard/batches/${batch.id}`} variant="ghost">
-          Review Metadata
+          Open project
         </ButtonLink>
         <ButtonLink href={`/dashboard/batches/${batch.id}/export`} variant="secondary">
-          Export CSV
+          Download CSV
         </ButtonLink>
       </div>
     </Card>

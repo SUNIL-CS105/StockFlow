@@ -34,11 +34,11 @@ export default async function ExportPage({ params }: { params: Promise<{ batchId
       <div className="flex flex-wrap items-start justify-between gap-4">
         <SectionHeading
           eyebrow="Export/download"
-          title={`Export ${(batch as Batch).batch_name}`}
-          description="Download CSV templates, enhanced images, and metadata backups. Direct stock-platform auto-upload is intentionally reserved for future compliant integrations."
+          title={`Download files for ${(batch as Batch).batch_name}`}
+          description="Pick a spreadsheet format, download the files, then upload them manually to a stock website when you are ready."
         />
         <ButtonLink href={`/dashboard/batches/${batchId}/metadata`} variant="ghost">
-          Review Metadata
+          Check words first
         </ButtonLink>
       </div>
 
@@ -52,7 +52,7 @@ export default async function ExportPage({ params }: { params: Promise<{ batchId
           ))}
         </div>
         <p className="mt-4 rounded-2xl bg-amber-50 p-3 text-sm text-amber-800">
-          Review warnings before submitting to stock platforms.
+          Tip: check model/property warnings before submitting to stock platforms.
         </p>
       </Card>
 

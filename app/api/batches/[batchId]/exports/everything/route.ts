@@ -28,13 +28,15 @@ export async function GET(_request: Request, { params }: { params: Promise<{ bat
     for (const image of rows) {
       const bucket = image.enhanced_url ? STORAGE_BUCKETS.enhanced : STORAGE_BUCKETS.originals;
       const path = image.enhanced_url ?? image.stored_url;
-      const { data: signedUrlData } = await session.supabase.storage.from(bucket).createSignedUrl(path, 60 * 10);
+      const downloadUrl = path.startsWith("http")
+        ? path
+        : (await session.supabase.storage.from(bucket).createSignedUrl(path, 60 * 10)).data?.signedUrl;
 
-      if (!signedUrlData?.signedUrl) {
+      if (!downloadUrl) {
         continue;
       }
 
-      const response = await fetch(signedUrlData.signedUrl);
+      const response = await fetch(downloadUrl);
       if (!response.ok) {
         continue;
       }

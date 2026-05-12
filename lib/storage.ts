@@ -5,6 +5,21 @@ import type { StockImage } from "./types";
 export async function withSignedImageUrls<T extends StockImage>(supabase: SupabaseClient, images: T[]) {
   return Promise.all(
     images.map(async (image) => {
+      if (image.stored_url.startsWith("https://") || image.stored_url.startsWith("http://")) {
+        const enhanced = image.enhanced_url?.startsWith("http")
+          ? image.enhanced_url
+          : image.enhanced_url
+            ? (await supabase.storage.from(STORAGE_BUCKETS.enhanced).createSignedUrl(image.enhanced_url, 60 * 60)).data
+                ?.signedUrl ?? null
+            : null;
+
+        return {
+          ...image,
+          signedOriginalUrl: image.stored_url,
+          signedEnhancedUrl: enhanced,
+        };
+      }
+
       const original = await supabase.storage.from(STORAGE_BUCKETS.originals).createSignedUrl(image.stored_url, 60 * 60);
       const enhanced = image.enhanced_url
         ? await supabase.storage.from(STORAGE_BUCKETS.enhanced).createSignedUrl(image.enhanced_url, 60 * 60)

@@ -1,5 +1,6 @@
 import { FileSpreadsheet, Images, Sparkles, UploadCloud } from "lucide-react";
 import { BatchCard } from "@/components/batch-card";
+import { DemoBatchButton } from "@/components/demo-batch-button";
 import { SetupNotice } from "@/components/setup-notice";
 import { SignOutButton } from "@/components/sign-out-button";
 import { Badge } from "@/components/ui/badge";
@@ -41,20 +42,35 @@ export default async function DashboardPage() {
       <div className="flex flex-wrap items-start justify-between gap-4">
         <SectionHeading
           eyebrow="Dashboard"
-          title="Your stock photo workflow"
-          description="Create batches, generate metadata, review warnings, and download CSV exports."
+          title="Start with one simple choice"
+          description="Try the sample batch first, or upload your own photos when you are ready."
         />
-        <div className="flex gap-3">
+        <div className="flex flex-wrap gap-3">
           <SignOutButton />
-          <ButtonLink href="/dashboard/batches/new">Create New Batch</ButtonLink>
+          <DemoBatchButton />
+          <ButtonLink href="/dashboard/batches/new">Upload my photos</ButtonLink>
         </div>
       </div>
+
+      <Card className="bg-gradient-to-r from-blue-600 to-emerald-500 text-white">
+        <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
+          <div>
+            <p className="text-sm font-bold uppercase tracking-[0.25em] text-blue-100">Student mode</p>
+            <h2 className="mt-3 text-3xl font-bold">Learn the stock photo workflow without fear.</h2>
+            <p className="mt-3 max-w-3xl text-blue-50">
+              The sample batch already has photos and metadata, so you can practice editing keywords, checking warnings,
+              and downloading CSV files before uploading your own images.
+            </p>
+          </div>
+          <DemoBatchButton className="[&_button]:bg-white [&_button]:text-blue-700 [&_button]:hover:bg-blue-50" />
+        </div>
+      </Card>
 
       <section className="grid gap-4 md:grid-cols-4">
         <Card>
           <UploadCloud className="text-blue-600" />
           <p className="mt-4 text-3xl font-bold text-slate-950">{summaries.length}</p>
-          <p className="text-sm text-slate-500">batches</p>
+          <p className="text-sm text-slate-500">photo projects</p>
         </Card>
         <Card>
           <Images className="text-emerald-600" />
@@ -66,7 +82,7 @@ export default async function DashboardPage() {
           <p className="mt-4 text-3xl font-bold text-slate-950">
             {summaries.filter((batch) => batch.status === "metadata_ready").length}
           </p>
-          <p className="text-sm text-slate-500">ready for CSV</p>
+          <p className="text-sm text-slate-500">ready to download</p>
         </Card>
         <Card>
           <Sparkles className="text-emerald-600" />
@@ -77,9 +93,9 @@ export default async function DashboardPage() {
 
       <section id="workflow" className="grid gap-4 md:grid-cols-3">
         {[
-          ["1", "Upload Images", "Drag-and-drop your first batch of stock photos."],
-          ["2", "Generate Metadata", "AI suggests titles, descriptions, keywords, releases, and quality warnings."],
-          ["3", "Export CSV", "Download master and platform-specific spreadsheets plus backup files."],
+          ["1", "Add photos", "Use the demo batch or drag in your own pictures."],
+          ["2", "Check the words", "Edit the title, description, and keywords like a simple spreadsheet."],
+          ["3", "Download files", "Export CSV files that stock websites can read."],
         ].map(([step, title, description]) => (
           <Card key={step}>
             <Badge tone="green">Step {step}</Badge>
@@ -91,18 +107,21 @@ export default async function DashboardPage() {
 
       <section id="batches" className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-slate-950">Recent batches</h2>
+          <h2 className="text-2xl font-bold text-slate-950">Your photo projects</h2>
           <ButtonLink href="/dashboard/batches/new" variant="secondary">
-            Upload Images
+            Upload photos
           </ButtonLink>
         </div>
         {summaries.length === 0 ? (
           <Card className="text-center">
-            <p className="text-xl font-bold text-slate-950">Upload your first batch of stock photos.</p>
-            <p className="mt-2 text-slate-600">You will see thumbnails, progress, and metadata status here.</p>
-            <ButtonLink href="/dashboard/batches/new" className="mt-6">
-              Create New Batch
-            </ButtonLink>
+            <p className="text-xl font-bold text-slate-950">Try StockFlow with sample photos.</p>
+            <p className="mt-2 text-slate-600">No upload needed. Practice reviewing metadata and exporting CSV files.</p>
+            <div className="mt-6 flex justify-center gap-3">
+              <DemoBatchButton />
+              <ButtonLink href="/dashboard/batches/new" variant="ghost">
+                Upload my photos
+              </ButtonLink>
+            </div>
           </Card>
         ) : (
           <div className="grid gap-4 lg:grid-cols-2">

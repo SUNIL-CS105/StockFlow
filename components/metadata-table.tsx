@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { AlertTriangle, CheckCircle2, Save, Sparkles, XCircle } from "lucide-react";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
+import { HelpTip } from "./ui/help-tip";
 import { cleanKeywords, parseKeywords } from "@/lib/keywords";
 import { CATEGORY_OPTIONS } from "@/lib/constants";
 import type { ImageMetadata, LicenseSuggestion, StockImage } from "@/lib/types";
@@ -163,43 +164,53 @@ export function MetadataTable({ rows }: { rows: Row[] }) {
 
   return (
     <div className="space-y-5">
-      <div className="grid gap-3 rounded-3xl bg-white p-4 shadow-sm lg:grid-cols-[1fr_1fr_auto_auto]">
+      <div className="rounded-3xl bg-white p-5 shadow-sm">
+        <h2 className="text-xl font-bold text-slate-950">Simple editing tools</h2>
+        <p className="mt-2 text-sm text-slate-600">
+          Use these if you want to add or replace a keyword across every photo at once.
+          <HelpTip label="Keyword relevance explanation">
+            Relevant keywords are words a buyer would actually search for. Put the clearest subject words first, such
+            as flower, garden, laptop, student, or city.
+          </HelpTip>
+        </p>
+        <div className="mt-4 grid gap-3 lg:grid-cols-[1fr_1fr_auto_auto]">
         <input
           value={bulkKeyword}
           onChange={(event) => setBulkKeyword(event.target.value)}
-          placeholder="Bulk apply keyword"
+          placeholder="Add one keyword to all photos"
           className="rounded-2xl border border-slate-200 px-4 py-2 outline-none focus:ring-4 focus:ring-blue-100"
         />
         <div className="grid grid-cols-2 gap-2">
           <input
             value={replaceFrom}
             onChange={(event) => setReplaceFrom(event.target.value)}
-            placeholder="Replace keyword"
+            placeholder="Find keyword"
             className="rounded-2xl border border-slate-200 px-4 py-2 outline-none focus:ring-4 focus:ring-blue-100"
           />
           <input
             value={replaceTo}
             onChange={(event) => setReplaceTo(event.target.value)}
-            placeholder="With keyword"
+            placeholder="New keyword"
             className="rounded-2xl border border-slate-200 px-4 py-2 outline-none focus:ring-4 focus:ring-blue-100"
           />
         </div>
         <Button type="button" variant="secondary" onClick={applyBulkKeyword}>
-          Bulk apply
+          Add to all
         </Button>
         <Button type="button" variant="ghost" onClick={replaceKeyword}>
-          Bulk replace
+          Replace
         </Button>
+        </div>
       </div>
 
       <div className="flex flex-wrap gap-3">
         <Button type="button" variant="ghost" onClick={cleanAllKeywords}>
           <Sparkles size={16} />
-          Remove duplicates, keep top 50
+          Clean keyword list
         </Button>
         <Button type="button" onClick={saveAll}>
           <Save size={16} />
-          Save metadata
+          Save changes
         </Button>
       </div>
 
@@ -213,10 +224,28 @@ export function MetadataTable({ rows }: { rows: Row[] }) {
               <th className="p-4">File</th>
               <th className="p-4">Title</th>
               <th className="p-4">Description</th>
-              <th className="p-4">Keywords</th>
+              <th className="p-4">
+                Keywords
+                <HelpTip label="Keyword relevance explanation">
+                  The first 10 keywords matter most. Start with the visible subject, setting, and use case. Avoid random
+                  or unrelated words.
+                </HelpTip>
+              </th>
               <th className="p-4">Category</th>
-              <th className="p-4">Commercial/editorial</th>
-              <th className="p-4">Release warning</th>
+              <th className="p-4">
+                Commercial/editorial
+                <HelpTip label="Commercial versus editorial explanation">
+                  Choose commercial for safe photos without people, logos, private property, or events. Choose editorial
+                  when the image is better for news, education, travel, or documentary use.
+                </HelpTip>
+              </th>
+              <th className="p-4">
+                Release warning
+                <HelpTip label="Model and property release explanation">
+                  A model release is permission from a recognizable person. A property release is permission for private
+                  property, artwork, pets, or distinctive branded items.
+                </HelpTip>
+              </th>
               <th className="p-4">Quality warning</th>
               <th className="p-4">Actions</th>
             </tr>

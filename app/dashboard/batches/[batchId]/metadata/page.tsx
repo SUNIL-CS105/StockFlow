@@ -41,14 +41,14 @@ export default async function MetadataPage({ params }: { params: Promise<{ batch
       <div className="flex flex-wrap items-start justify-between gap-4">
         <SectionHeading
           eyebrow="Spreadsheet review"
-          title={`${(batch as Batch).batch_name} metadata`}
-          description="Edit stock-friendly titles, factual descriptions, ordered keywords, categories, license recommendations, and warnings."
+          title={`Check the words for ${(batch as Batch).batch_name}`}
+          description="Edit only what looks wrong. Keep titles simple, put the best keywords first, and read release warnings before downloading."
         />
         <div className="flex gap-3">
           <ButtonLink href={`/dashboard/batches/${batchId}`} variant="ghost">
-            Back to batch
+            Back
           </ButtonLink>
-          <ButtonLink href={`/dashboard/batches/${batchId}/export`}>Export CSV</ButtonLink>
+          <ButtonLink href={`/dashboard/batches/${batchId}/export`}>Download CSV</ButtonLink>
         </div>
       </div>
       <MetadataTable rows={rows} />
